@@ -3,7 +3,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ChatPermi
 from pymongo import AsyncMongoClient
 import re, os
 from pyrogram.errors import FloodWait, UserIsBlocked, PeerIdInvalid, MessageNotModified
-
+from pyrogram.enums import ChatMemberStatus
 import asyncio
 import logging
 import sys
@@ -489,8 +489,9 @@ async def start_com(client, message):
 async def check_bio(client, message):
     chat_id = message.chat.id
     user_id = message.from_user.id
-    if message.chat.is_admin:
-        return
+    x=  await app.get_chat_member(message.chat.id, message.from_user.id)
+    if x.status == ChatMemberStatus.ADMINISTRATOR:
+        return 
     await add_served_chat(chat_id)
     sp = InlineKeyboardMarkup(
         [
