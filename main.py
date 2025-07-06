@@ -157,7 +157,7 @@ async def configure(client, message):
         ]
     )
     await message.reply_text(
-        "<b>Select punishment for users who have links or @usernameremove?? in their bio:</b>",
+        "<b>Select punishment for users who have links or usernameremove?? in their bio:</b>",
         reply_markup=keyboard,
         parse_mode=enums.ParseMode.HTML,
     )
