@@ -16,7 +16,7 @@ mongodb_uri = os.getenv(
 )
 support_gc = os.getenv("SUPPORT_GROUP", "")
 support_ch = os.getenv("SUPPORT_CHANNEL", "")
-owner = os.getenv("OWNER_ID", "01234455")
+owner = int(os.getenv("OWNER_ID", "7706682472"))
 
 app = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
@@ -447,7 +447,7 @@ async def start_com(client, message):
             [
                 InlineKeyboardButton(
                     "➕ Add me to your Group",
-                    url=f"https://t.me/{x.username}/startgroup=true",
+                    url=f"https://t.me/{x.username}?startgroup=true",
                 )
             ],
             [
