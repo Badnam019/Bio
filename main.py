@@ -370,8 +370,8 @@ async def approvelist_command(client, message):
 
 @app.on_message(filters.command("stats") & filters.user(owner))
 async def stats(client, message):
-    x = await get_served_chats()
-    y = await get_served_users()
+    x = len(await get_served_chats())
+    y = len(await get_served_users())
 
     await message.reply(f"Total Chats: {x}\nTotal users: {y}")
 
@@ -476,11 +476,15 @@ async def start_com(client, message):
     )
 
 
-@app.on_message(filters.group)
+@app.on_message(filters.group & ~filters.admin)
 async def check_bio(client, message):
     chat_id = message.chat.id
     user_id = message.from_user.id
-
+    if getattr(message, "sender_chat", None):
+      return 
+    
+    if message.from_user and ( message.from_user.is_self or message.from_user.is_bot):
+      return 
     await add_served_chat(chat_id)
     sp = InlineKeyboardMarkup(
         [
