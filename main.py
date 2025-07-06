@@ -377,7 +377,7 @@ async def stats(client, message):
 
 
 @app.on_message(
-    filters.command(["gcast", "broadband", "gcastpin", "broadbandpin"])
+    filters.command(["gcast", "broadcast", "gcastpin", "broadcastpin"])
     & filters.user(owner)
 )
 async def gcast_command(client, message):
@@ -466,8 +466,8 @@ async def start_com(client, message):
         "• <code>/approvelist</code> - List all approved users\n"
         "• <code>/config</code> - Set warnings & punishment\n"
         "• <code>/stats</code> - Show usage stats (owner only)\n"
-        "• <code>/gcast</code> or <code>/broadband</code> - Broadcast a message to all users/groups\n"
-        "• <code>/gcastpin</code> or <code>/broadbandpin</code> - Broadcast and pin the message\n\n"
+        "• <code>/gcast</code> or <code>/broadcast</code> - Broadcast a message to all users/groups\n"
+        "• <code>/gcastpin</code> or <code>/broadcastpin</code> - Broadcast and pin the message\n\n"
         "Add me to your group and make me admin to get started!"
     )
     await add_served_user(message.from_user.id)
