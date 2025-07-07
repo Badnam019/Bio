@@ -474,11 +474,11 @@ class Data:
 **┆◍ ʜᴇʏ, ɪ ᴀᴍ : [𝗕ɪᴏ 𝗟ɪɴᴋ 𝗥ᴇsᴛʀɪᴄᴛᴏʀ](https://t.me/BioLinkRmBot)**
 **┆● ɴɪᴄᴇ ᴛᴏ ᴍᴇᴇᴛ ʏᴏᴜ !** 
 **└────────────────────────•**
-**ɪ ʜᴇʟᴘ ᴘʀᴏᴛᴇᴄᴛ ʏᴏᴜʀ ɢʀᴏᴜᴘ ғʀᴏᴍ ᴜsᴇʀs ᴡɪᴛʜ sᴜsᴘɪᴄɪᴏᴜs ʙɪᴏs (ᴜʀʟs ᴏʀ ᴜsᴇʀɴᴀᴍᴇs).**
-**ɪ ᴄᴀɴ ᴍᴜᴛᴇ & ᴡᴀʀɴ ᴜsᴇʀs ᴡɪᴛʜ ᴍᴇɴᴛɪᴏɴ.**
-**ᴜsᴇʀ's ᴅᴇʟᴇᴛᴇ ᴍᴇssᴀɢᴇ ʜᴀᴠᴇ ʟɪɴᴋs ɪɴ ʙɪᴏ.**
+**● ɪ ʜᴇʟᴘ ᴘʀᴏᴛᴇᴄᴛ ʏᴏᴜʀ ɢʀᴏᴜᴘ ғʀᴏᴍ ᴜsᴇʀs ᴡɪᴛʜ sᴜsᴘɪᴄɪᴏᴜs ʙɪᴏs (ᴜʀʟs ᴏʀ ᴜsᴇʀɴᴀᴍᴇs).**
+**● ɪ ᴄᴀɴ ᴍᴜᴛᴇ & ᴡᴀʀɴ ᴜsᴇʀs ᴡɪᴛʜ ᴍᴇɴᴛɪᴏɴ.**
+**● ᴜsᴇʀ's ᴅᴇʟᴇᴛᴇ ᴍᴇssᴀɢᴇ ʜᴀᴠᴇ ʟɪɴᴋs ɪɴ ʙɪᴏ.**
 **•─────────────────────────•**
-**ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ᴍᴀᴋᴇ ᴍᴇ ᴀᴅᴍɪɴ ᴛᴏ ɢᴇᴛ sᴛᴀʀᴛᴇᴅ!**
+**● ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴀɴᴅ ᴍᴀᴋᴇ ᴍᴇ ᴀᴅᴍɪɴ ᴛᴏ ɢᴇᴛ sᴛᴀʀᴛᴇᴅ!**
 """
 
     HELP = """
@@ -497,19 +497,19 @@ class Data:
 """
 
     ABOUT = """
-**ᴀʙᴏᴜᴛ ᴛʜɪꜱ ʙᴏᴛ** 🌙
+**◌ ᴀʙᴏᴜᴛ ᴛʜɪꜱ ʙᴏᴛ** 🌙
 
-**ᴀ ᴛᴇʟᴇɢʀᴀᴍ ᴜsᴇʀ's ʙɪᴏ ʟɪɴᴋ ᴄʜᴇᴄᴋᴇʀ ʙᴏᴛ ғᴏʀ ɢʀᴏᴜᴘs. **
+**◌ ᴀ ᴛᴇʟᴇɢʀᴀᴍ ᴜsᴇʀ's ʙɪᴏ ʟɪɴᴋ ᴄʜᴇᴄᴋᴇʀ ʙᴏᴛ ғᴏʀ ɢʀᴏᴜᴘs. **
 
-**sᴜᴘᴘᴏʀᴛᴇᴅ :- ᴀᴜᴛʜ ᴜsᴇʀ & ᴀᴅᴍɪɴ ᴄᴏᴍᴍᴀɴᴅ,ᴀᴘᴘʀᴏᴠᴇᴅ/ᴜɴᴀᴘᴘʀᴏᴠᴇᴅ ᴜsᴇʀ , sᴇᴛ ᴡᴀʀɴɪɴɢs & ᴘᴜɴɪsʜᴍᴇɴᴛ ᴇᴛᴄ.**
+**◌ sᴜᴘᴘᴏʀᴛᴇᴅ :- ᴀᴜᴛʜ ᴜsᴇʀ & ᴀᴅᴍɪɴ ᴄᴏᴍᴍᴀɴᴅ,ᴀᴘᴘʀᴏᴠᴇᴅ/ᴜɴᴀᴘᴘʀᴏᴠᴇᴅ ᴜsᴇʀ , sᴇᴛ ᴡᴀʀɴɪɴɢs & ᴘᴜɴɪsʜᴍᴇɴᴛ ᴇᴛᴄ.**
 
 **◌ ʟᴀɴɢᴜᴀɢᴇ : [ᴘʏᴛʜᴏɴ](https://www.python.org)**
 **◌ ᴘᴏᴡᴇʀᴇᴅ ʙʏ : [sʜɪᴠᴀɴsʜ-xᴅ](https://t.me/SHIVANSH474)**
 **◌ ᴅᴇᴠᴇʟᴏᴘᴇʀ : [sʜɪᴠᴀɴsʜ](https://t.me/SHIVANSHDEVS)**
 """
 
-# Commands
-@app.on_message(filters.command("start"))
+# /start command
+@app.on_message(filters.command("start") & filters.private)
 async def start_handler(client: Client, message: Message):
     await client.send_photo(
         chat_id=message.chat.id,
@@ -518,8 +518,9 @@ async def start_handler(client: Client, message: Message):
         reply_markup=InlineKeyboardMarkup(Data.buttons)
     )
 
+# /help command
 @app.on_message(filters.command("help") & filters.private)
-async def help_command(client: Client, message: Message):
+async def help_handler(client: Client, message: Message):
     await client.send_photo(
         chat_id=message.chat.id,
         photo=ALIVE_PIC,
@@ -527,8 +528,9 @@ async def help_command(client: Client, message: Message):
         reply_markup=InlineKeyboardMarkup(Data.back_buttons)
     )
 
+# /about command
 @app.on_message(filters.command("about") & filters.private)
-async def about_command(client: Client, message: Message):
+async def about_handler(client: Client, message: Message):
     await client.send_photo(
         chat_id=message.chat.id,
         photo=ALIVE_PIC,
@@ -536,30 +538,32 @@ async def about_command(client: Client, message: Message):
         reply_markup=InlineKeyboardMarkup(Data.back_buttons)
     )
 
-# # Callback queries
+# Callback query handler
 @app.on_callback_query()
 async def callback_handler(client: Client, query: CallbackQuery):
     try:
-        await query.answer()
-
         data = query.data
         if data == "home":
             await query.message.edit_media(
-                media=InputMediaPhoto(ALIVE_PIC, caption=Data.START),
+                media=InputMediaPhoto(media=ALIVE_PIC, caption=Data.START),
                 reply_markup=InlineKeyboardMarkup(Data.buttons)
             )
         elif data == "help":
             await query.message.edit_text(
-                Data.HELP,
-                reply_markup=InlineKeyboardMarkup(Data.back_buttons)
+                text=Data.HELP,
+                reply_markup=InlineKeyboardMarkup(Data.back_buttons),
+                disable_web_page_preview=True
             )
         elif data == "about":
             await query.message.edit_text(
-                Data.ABOUT,
-                reply_markup=InlineKeyboardMarkup(Data.back_buttons)
+                text=Data.ABOUT,
+                reply_markup=InlineKeyboardMarkup(Data.back_buttons),
+                disable_web_page_preview=True
             )
+        await query.answer()
     except Exception as e:
         print(f"Callback error: {e}")
+
 
 @app.on_message(filters.group)
 async def check_bio(client, message):
