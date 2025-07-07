@@ -451,13 +451,11 @@ async def gcast_command(client, message):
 
 class Data:
 
-    back_buttons = [
-        donate_button,
+    back_buttons = [
         [InlineKeyboardButton("🏠 ʀᴇᴛᴜʀɴ ʜᴏᴍᴇ 🏠", callback_data="home")]
     ]
 
-    buttons = [
-        generate_single_button,
+    buttons = [
         [InlineKeyboardButton("✙ ᴧᴅᴅ ᴍᴇ ᴛσ ʏσᴜʀ ᴄʜᴧᴛ ✙", url="https://t.me/{x.username}?startgroup=true")],
         [
             InlineKeyboardButton("❔ʜᴇʟᴘ & ᴄᴏᴍᴍᴀɴᴅ", callback_data="help"),
