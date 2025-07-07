@@ -1,3 +1,4 @@
 Kurigram
 tgcrypto
 pymongo
+git+https://github.com/doraemon890/pyrogram
