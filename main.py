@@ -464,8 +464,8 @@ class Data:
             InlineKeyboardButton("ᴀʙᴏᴜᴛ 🎶", callback_data="about")
         ],
         [
-            InlineKeyboardButton("⚡ ᴜᴘᴅᴀᴛᴇ's", url=support_gc),
-            InlineKeyboardButton("sᴜᴘᴘᴏʀᴛ ⛈️️", url=support_ch)
+            InlineKeyboardButton("⚡ ᴜᴘᴅᴀᴛᴇ's", url="https://t.me/SHIVANSH474"),
+            InlineKeyboardButton("sᴜᴘᴘᴏʀᴛ ⛈️️", url="https://t.me/MASTIWITHFRIENDSXD")
         ],  
     ]
 
