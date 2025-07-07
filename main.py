@@ -453,11 +453,11 @@ async def gcast_command(client, message):
 
 class Data:
 
-    back_buttons = [
+    back_buttons = [
         [InlineKeyboardButton("🏠 ʀᴇᴛᴜʀɴ ʜᴏᴍᴇ 🏠", callback_data="home")]
     ]
 
-    buttons = [
+    buttons = [
         [InlineKeyboardButton("✙ ᴧᴅᴅ ᴍᴇ ᴛσ ʏσᴜʀ ᴄʜᴧᴛ ✙", url="https://t.me/BioLinkRmBot?startgroup=true")],
         [
             InlineKeyboardButton("❔ ʜᴇʟᴘ", callback_data="help"),
@@ -468,6 +468,7 @@ class Data:
             InlineKeyboardButton("sᴜᴘᴘᴏʀᴛ ⛈️️", url="https://t.me/MASTIWITHFRIENDSXD")
         ],  
     ]
+
 
     START = """
 **┌────── ˹ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ˼ ⏤͟͟͞͞‌‌‌‌★**
