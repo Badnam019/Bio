@@ -539,23 +539,28 @@ async def about_command(client: Client, message: Message):
 # # Callback queries
 @app.on_callback_query()
 async def callback_handler(client: Client, query: CallbackQuery):
-    data = query.data
-    if data == "home":
-        await query.message.edit_media(
-            media=InputMediaPhoto(ALIVE_PIC, caption=Data.START),
-            reply_markup=InlineKeyboardMarkup(Data.buttons)
-        )
-    elif data == "help":
-        await query.message.edit_text(
-            Data.HELP,
-            reply_markup=InlineKeyboardMarkup(Data.back_buttons)
-        )
-    elif data == "about":
-        await query.message.edit_text(
-            Data.ABOUT,
-            reply_markup=InlineKeyboardMarkup(Data.back_buttons)
-        )
+    try:
+        await query.answer()
 
+        data = query.data
+        if data == "home":
+            await query.message.edit_media(
+                media=InputMediaPhoto(ALIVE_PIC, caption=Data.START),
+                reply_markup=InlineKeyboardMarkup(Data.buttons)
+            )
+        elif data == "help":
+            await query.message.edit_text(
+                Data.HELP,
+                reply_markup=InlineKeyboardMarkup(Data.back_buttons)
+            )
+        elif data == "about":
+            await query.message.edit_text(
+                Data.ABOUT,
+                reply_markup=InlineKeyboardMarkup(Data.back_buttons)
+            )
+    except Exception as e:
+        print(f"Callback error: {e}")
+
 @app.on_message(filters.group)
 async def check_bio(client, message):
     chat_id = message.chat.id
