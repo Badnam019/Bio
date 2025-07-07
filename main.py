@@ -520,15 +520,19 @@ async def start_handler(client: Client, message: Message):
 
 @app.on_message(filters.command("help") & filters.private)
 async def help_command(client: Client, message: Message):
-    await message.reply_text(
-        Data.HELP,
+    await client.send_photo(
+        chat_id=message.chat.id,
+        photo=ALIVE_PIC,
+        caption=Data.HELP,
         reply_markup=InlineKeyboardMarkup(Data.back_buttons)
     )
 
 @app.on_message(filters.command("about") & filters.private)
 async def about_command(client: Client, message: Message):
-    await message.reply_text(
-        Data.ABOUT,
+    await client.send_photo(
+        chat_id=message.chat.id,
+        photo=ALIVE_PIC,
+        caption=Data.ABOUT,
         reply_markup=InlineKeyboardMarkup(Data.back_buttons)
     )
 
@@ -542,16 +546,16 @@ async def callback_handler(client: Client, query: CallbackQuery):
             reply_markup=InlineKeyboardMarkup(Data.buttons)
         )
     elif data == "help":
-        await query.message.edit_text(
-            Data.HELP,
+        await query.message.edit_media(
+            media=InputMediaPhoto(ALIVE_PIC, caption=Data.HELP),
             reply_markup=InlineKeyboardMarkup(Data.back_buttons)
         )
     elif data == "about":
-        await query.message.edit_text(
-            Data.ABOUT,
+        await query.message.edit_media(
+            media=InputMediaPhoto(ALIVE_PIC, caption=Data.ABOUT),
             reply_markup=InlineKeyboardMarkup(Data.back_buttons)
         )
-
+
 
 @app.on_message(filters.group)
 async def check_bio(client, message):
