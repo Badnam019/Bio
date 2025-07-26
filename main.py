@@ -5,6 +5,7 @@ from pymongo import AsyncMongoClient
 import re, os
 from pyrogram.errors import FloodWait, UserIsBlocked, PeerIdInvalid, MessageNotModified
 from pyrogram.enums import ChatMemberStatus
+from pyrogram.types import CallbackQuery, InputMediaPhoto
 import asyncio
 import logging
 import sys
@@ -25,6 +26,7 @@ mongodb_uri = os.getenv(
     "mongodb+srv://SHASHANK:STRANGER@shashank.uj7lold.mongodb.net/?retryWrites=true&w=majority",
 )
 support_gc = os.getenv("SUPPORT_GROUP", "")
+ALIVE_PIC = os.getenv("ALIVE_PIC", "https://files.catbox.moe/gpl7zc.jpg")
 support_ch = os.getenv("SUPPORT_CHANNEL", "")
 owner = int(os.getenv("OWNER_ID", "6919199044"))
 
