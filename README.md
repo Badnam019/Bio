@@ -5,7 +5,7 @@
 
 ## 🚀 **Deploy on Heroku**  
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ixrocky/Bio?tab=readme-ov-file)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Badnam019/Bio?tab=readme-ov-file)
 
 ---
 
