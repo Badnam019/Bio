@@ -26,7 +26,7 @@ mongodb_uri = os.getenv(
 )
 support_gc = os.getenv("SUPPORT_GROUP", "")
 support_ch = os.getenv("SUPPORT_CHANNEL", "")
-owner = int(os.getenv("OWNER_ID", "6919199044"))
+owner = int(os.getenv("OWNER_ID", "8274033012"))
 
 app = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
@@ -155,15 +155,15 @@ async def configure(client, message):
             [InlineKeyboardButton("Warn", callback_data="warn")],
             [
                 InlineKeyboardButton(
-                    "Mute ✅" if current["action"] == "mute" else "Mute",
+                    "Mᴜᴛᴇ 🚫" if current["action"] == "mute" else "Mute",
                     callback_data="mute",
                 ),
                 InlineKeyboardButton(
-                    "Ban ✅" if current["action"] == "ban" else "Ban",
+                    "Bᴀɴ 🚫" if current["action"] == "ban" else "Ban",
                     callback_data="ban",
                 ),
             ],
-            [InlineKeyboardButton("Close", callback_data="close")],
+            [InlineKeyboardButton("Cʟᴏsᴇ", callback_data="close")],
         ]
     )
     await message.reply_text(
@@ -176,8 +176,8 @@ async def configure(client, message):
 keyboard = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("🚀 𝗨𝗽𝗱𝗮𝘁𝗲", url=support_gc),
-            InlineKeyboardButton("💬 𝗦𝘂𝗽𝗽𝗼𝗿𝘁", url=support_ch),
+            InlineKeyboardButton("💌 Uᴘᴅᴀᴛᴇ", url=support_gc),
+            InlineKeyboardButton("📩 Sᴜᴘᴘʀᴏᴛ", url=support_ch),
         ],
     ]
 )
@@ -456,13 +456,13 @@ async def start_com(client, message):
         [
             [
                 InlineKeyboardButton(
-                    "➕ Add me to your Group",
+                    "💌 Aᴅᴅ Mᴇ Yᴏᴜʀ Gʀᴏᴜᴘ 💌",
                     url=f"https://t.me/{x.username}?startgroup=true",
                 )
             ],
             [
-                InlineKeyboardButton("🚀 𝗨𝗽𝗱𝗮𝘁𝗲", url=support_gc),
-                InlineKeyboardButton("💬 𝗦𝘂𝗽𝗽𝗼𝗿𝘁", url=support_ch),
+                InlineKeyboardButton("💌Uᴘᴅᴀᴛᴇ", url=support_gc),
+                InlineKeyboardButton("💌 Sᴜᴘᴘʀᴏᴛ", url=support_ch),
             ],
         ]
     )
@@ -497,8 +497,8 @@ async def check_bio(client, message):
     sp = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton("🚀 𝗨𝗽𝗱𝗮𝘁𝗲", url=support_gc),
-                InlineKeyboardButton("💬 𝗦𝘂𝗽𝗽𝗼𝗿𝘁", url=support_ch),
+                InlineKeyboardButton("💌 Uᴘᴅᴀᴛᴇ", url=support_gc),
+                InlineKeyboardButton("💌 sᴜᴘᴘʀᴏᴛ", url=support_ch),
             ],
         ]
     )
@@ -536,7 +536,7 @@ async def check_bio(client, message):
                         [
                             [
                                 InlineKeyboardButton(
-                                    "Unmute ✅", callback_data=f"unmute_{user_id}"
+                                    "Uɴᴍᴜᴛᴇ ✅", callback_data=f"unmute_{user_id}"
                                 )
                             ]
                         ]
@@ -548,7 +548,7 @@ async def check_bio(client, message):
                         [
                             [
                                 InlineKeyboardButton(
-                                    "Unban ✅", callback_data=f"unban_{user_id}"
+                                    "Uɴʙᴀɴ ✅", callback_data=f"unban_{user_id}"
                                 )
                             ]
                         ]
