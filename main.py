@@ -176,8 +176,8 @@ async def configure(client, message):
 keyboard = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton("💌 Uᴘᴅᴀᴛᴇ", url=support_gc),
-            InlineKeyboardButton("📩 Sᴜᴘᴘʀᴏᴛ", url=support_ch),
+            InlineKeyboardButton("• 𝐒υᴘᴘσꝛᴛ •", url=support_gc),
+            InlineKeyboardButton("• υᴘᴅᴧᴛєs •", url=support_ch),
         ],
     ]
 )
@@ -456,13 +456,13 @@ async def start_com(client, message):
         [
             [
                 InlineKeyboardButton(
-                    "💌 Aᴅᴅ Mᴇ Yᴏᴜʀ Gʀᴏᴜᴘ 💌",
+                    "✚ ʌᴅᴅ ϻє ɪη ʏσυʀ ɢʀσυᴘ ✚",
                     url=f"https://t.me/{x.username}?startgroup=true",
                 )
             ],
             [
-                InlineKeyboardButton("💌Uᴘᴅᴀᴛᴇ", url=support_gc),
-                InlineKeyboardButton("💌 Sᴜᴘᴘʀᴏᴛ", url=support_ch),
+                InlineKeyboardButton("• 𝐒υᴘᴘσꝛᴛ •", url=support_gc),
+                InlineKeyboardButton("• υᴘᴅᴧᴛєs •", url=support_ch),
             ],
         ]
     )
@@ -497,8 +497,8 @@ async def check_bio(client, message):
     sp = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton("💌 Uᴘᴅᴀᴛᴇ", url=support_gc),
-                InlineKeyboardButton("💌 sᴜᴘᴘʀᴏᴛ", url=support_ch),
+                InlineKeyboardButton("• 𝐒υᴘᴘσꝛᴛ •", url=support_gc),
+                InlineKeyboardButton("• υᴘᴅᴧᴛєs •", url=support_ch),
             ],
         ]
     )
