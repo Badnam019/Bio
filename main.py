@@ -478,13 +478,13 @@ async def start_com(client, message):
         [
             [
                 InlineKeyboardButton(
-                    "✚ ʌᴅᴅ ϻє ɪη ʏσυʀ ɢʀσυᴘ ✚",
+                    "ᴧᴅᴅ ϻє ʙᴧʙʏ",
                     url=f"https://t.me/{x.username}?startgroup=true",
                 )
             ],
             [
-                InlineKeyboardButton("• 𝐒υᴘᴘσꝛᴛ •", url=support_gc),
-                InlineKeyboardButton("• υᴘᴅᴧᴛєs •", url=support_ch),
+                InlineKeyboardButton("sυᴘᴘσꝛᴛ", url=support_gc),
+                InlineKeyboardButton("υᴘᴅᴧᴛє", url=support_ch),
             ],
         ]
     )
@@ -521,8 +521,8 @@ async def check_bio(client, message):
     sp = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton("• 𝐒υᴘᴘσꝛᴛ •", url=support_gc),
-                InlineKeyboardButton("• υᴘᴅᴧᴛєs •", url=support_ch),
+                InlineKeyboardButton("sυᴘᴘσꝛᴛ", url=support_gc),
+                InlineKeyboardButton("υᴘᴅᴧᴛє", url=support_ch),
             ],
         ]
     )
@@ -556,7 +556,7 @@ Warning {warn_count}/{current['warn_limit']}"""
 
         if warn_count >= current["warn_limit"]:
             try:
-                if current["action"] == "mute":
+                if current["action"] == "ϻυᴛє":
                     await client.restrict_chat_member(
                         chat_id, user_id, ChatPermissions()
                     )
@@ -564,19 +564,19 @@ Warning {warn_count}/{current['warn_limit']}"""
                         [
                             [
                                 InlineKeyboardButton(
-                                    "Uɴᴍᴜᴛᴇ ✅", callback_data=f"unmute_{user_id}"
+                                    "υηϻυᴛє", callback_data=f"unmute_{user_id}"
                                 )
                             ]
                         ]
                     )
                     await reply.edit(f"{username} has been 🔇 muted.", reply_markup=kb)
-                elif current["action"] == "ban":
+                elif current["action"] == "ʙᴧη":
                     await client.ban_chat_member(chat_id, user_id)
                     kb = InlineKeyboardMarkup(
                         [
                             [
                                 InlineKeyboardButton(
-                                    "Uɴʙᴀɴ ✅", callback_data=f"unban_{user_id}"
+                                    "υηʙᴧη", callback_data=f"unban_{user_id}"
                                 )
                             ]
                         ]
