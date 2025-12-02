@@ -26,7 +26,7 @@ mongodb_uri = os.getenv(
     "MONGO_DB_URI",
     "mongodb+srv://SHASHANK:STRANGER@shashank.uj7lold.mongodb.net/?retryWrites=true&w=majority",
 )
-support_gc = os.getenv("SUPPORT_GROUP", "https://t.me/YourSupportGroup") # Added fallback to prevent error if empty
+support_gc = os.getenv("SUPPORT_GROUP", "https://t.me/YourSupportGroup")
 support_ch = os.getenv("SUPPORT_CHANNEL", "https://t.me/YourSupportChannel")
 owner = int(os.getenv("OWNER_ID", "8274033012"))
 
@@ -52,6 +52,14 @@ cache = {
     "chats": [],
 }
 is_broadcasting = False
+
+# --- HELPER FUNCTION FOR AUTO DELETE ---
+async def auto_delete_message(message, time=5):
+    await asyncio.sleep(time)
+    try:
+        await message.delete()
+    except Exception:
+        pass
 
 # --- DB FUNCTIONS ---
 
@@ -136,9 +144,11 @@ async def configure(client, message):
     user_id = message.from_user.id
 
     if not await is_admin(client, chat_id, user_id):
-        return await message.reply_text(
+        m = await message.reply_text(
             "<b>❌ You are not administrator</b>", parse_mode=enums.ParseMode.HTML
         )
+        asyncio.create_task(auto_delete_message(m))
+        return
 
     current = await get_settings(chat_id)
     keyboard = InlineKeyboardMarkup(
@@ -251,9 +261,11 @@ async def approve_user_command(client, message):
     from_user_id = message.from_user.id
 
     if not await is_admin(client, chat_id, from_user_id):
-        return await message.reply_text(
+        m = await message.reply_text(
             "<b>❌ You are not an administrator</b>", parse_mode=enums.ParseMode.HTML
         )
+        asyncio.create_task(auto_delete_message(m))
+        return
 
     target_user = None
 
@@ -265,28 +277,37 @@ async def approve_user_command(client, message):
             try:
                 target_user = await client.get_users(int(arg))
             except Exception:
-                return await message.reply_text("❌ Invalid user ID.")
+                m = await message.reply_text("❌ Invalid user ID.")
+                asyncio.create_task(auto_delete_message(m))
+                return
         else:
             if arg.startswith("@"):
                 arg = arg[1:]
             try:
                 target_user = await client.get_users(arg)
             except Exception:
-                return await message.reply_text("❌ Invalid username.")
+                m = await message.reply_text("❌ Invalid username.")
+                asyncio.create_task(auto_delete_message(m))
+                return
     else:
-        return await message.reply_text(
+        m = await message.reply_text(
             "❌ Please reply to a message or provide a username/user ID."
         )
+        asyncio.create_task(auto_delete_message(m))
+        return
 
     if await is_approved(target_user.id, chat_id):
-        return await message.reply_text(
+        m = await message.reply_text(
             "❌ This user is already approved in this group."
         )
+        asyncio.create_task(auto_delete_message(m))
+        return
 
     await approve_user(target_user.id, chat_id)
-    await message.reply_text(
+    m = await message.reply_text(
         f"✅ User {target_user.mention} has been approved for this group."
     )
+    asyncio.create_task(auto_delete_message(m))
 
 
 @app.on_message(filters.group & filters.command("unapprove"))
@@ -295,9 +316,11 @@ async def unapprove_user_command(client, message):
     from_user_id = message.from_user.id
 
     if not await is_admin(client, chat_id, from_user_id):
-        return await message.reply_text(
+        m = await message.reply_text(
             "<b>❌ You are not an administrator</b>", parse_mode=enums.ParseMode.HTML
         )
+        asyncio.create_task(auto_delete_message(m))
+        return
 
     target_user = None
 
@@ -309,26 +332,35 @@ async def unapprove_user_command(client, message):
             try:
                 target_user = await client.get_users(int(arg))
             except Exception:
-                return await message.reply_text("❌ Invalid user ID.")
+                m = await message.reply_text("❌ Invalid user ID.")
+                asyncio.create_task(auto_delete_message(m))
+                return
         else:
             if arg.startswith("@"):
                 arg = arg[1:]
             try:
                 target_user = await client.get_users(arg)
             except Exception:
-                return await message.reply_text("❌ Invalid username.")
+                m = await message.reply_text("❌ Invalid username.")
+                asyncio.create_task(auto_delete_message(m))
+                return
     else:
-        return await message.reply_text(
+        m = await message.reply_text(
             "❌ Please reply to a message or provide a username/user ID."
         )
+        asyncio.create_task(auto_delete_message(m))
+        return
 
     if not await is_approved(target_user.id, chat_id):
-        return await message.reply_text("❌ This user is not approved in this group.")
+        m = await message.reply_text("❌ This user is not approved in this group.")
+        asyncio.create_task(auto_delete_message(m))
+        return
 
     await unapprove_user(target_user.id, chat_id)
-    await message.reply_text(
+    m = await message.reply_text(
         f"❌ User {target_user.mention} has been unapproved from this group."
     )
+    asyncio.create_task(auto_delete_message(m))
 
 
 @app.on_message(filters.group & filters.command("approvelist"))
@@ -337,29 +369,32 @@ async def approvelist_command(client, message):
     user_id_admin_check = message.from_user.id
 
     if not await is_admin(client, chat_id, user_id_admin_check):
-        return await message.reply_text(
+        m = await message.reply_text(
             "<b>❌ You are not an administrator</b>", parse_mode=enums.ParseMode.HTML
         )
+        asyncio.create_task(auto_delete_message(m))
+        return
 
     approved_users = approved_users_col.find({"chat_id": chat_id})
     text = ""
     async for user_doc in approved_users:
         try:
             user = await client.get_users(user_doc["user_id"])
-            # FIX 1: Added \n at the end of the line
             text += f"• <code>{user.id}</code> | {user.first_name} (@{user.username or 'N/A'})\n"
         except Exception:
             continue
 
     if not text:
-        return await message.reply_text("❌ No users have been approved in this group.")
+        m = await message.reply_text("❌ No users have been approved in this group.")
+        asyncio.create_task(auto_delete_message(m))
+        return
 
-    # FIX 2: Used triple quotes for multiline f-string
-    await message.reply_text(
+    m = await message.reply_text(
         f"""✅ Approved Users in this group:
 
 {text}""", parse_mode=enums.ParseMode.HTML
     )
+    asyncio.create_task(auto_delete_message(m))
 
 
 @app.on_message(filters.command("stats") & filters.user(owner))
@@ -367,8 +402,8 @@ async def stats(client, message):
     x = len(await get_served_chats())
     y = len(await get_served_users())
 
-    # FIX 3: Used \n instead of physical line break
-    await message.reply(f"Total Chats: {x}\nTotal users: {y}")
+    m = await message.reply(f"Total Chats: {x}\nTotal users: {y}")
+    asyncio.create_task(auto_delete_message(m))
 
 
 @app.on_message(
@@ -428,7 +463,6 @@ async def gcast_command(client, message):
             failed += 1
         await asyncio.sleep(0.1)
 
-    # FIX 4: Used triple quotes
     await panel.edit(
         f"""📢 Broadcast Complete
 ✅ Success: {success}
@@ -455,7 +489,6 @@ async def start_com(client, message):
         ]
     )
 
-    # FIX 5: Cleaned up multiline string
     help_text = (
         "<b>👋 Hello! I'm a Bio Filter Bot.</b>\n\n"
         "I help protect your group from users with suspicious bios (URLs or usernames).\n\n"
@@ -470,9 +503,10 @@ async def start_com(client, message):
         "Add me to your group and make me admin to get started!"
     )
     await add_served_user(message.from_user.id)
-    await message.reply_text(
+    m = await message.reply_text(
         help_text, reply_markup=start_buttons, parse_mode=enums.ParseMode.HTML
     )
+    asyncio.create_task(auto_delete_message(m))
 
 
 @app.on_message(filters.group)
@@ -513,11 +547,12 @@ async def check_bio(client, message):
         warn_count = await get_warnings(user_id) + 1
         await add_warning(user_id)
 
-        # FIX 6: Used triple quotes
         text = f"""🚨 {username}, your message was deleted because your bio contains a link.
 
 Warning {warn_count}/{current['warn_limit']}"""
         reply = await message.reply_text(text, reply_markup=sp)
+        # AUTO DELETE ADDED HERE
+        asyncio.create_task(auto_delete_message(reply))
 
         if warn_count >= current["warn_limit"]:
             try:
