@@ -1,14 +1,15 @@
 import asyncio
-from pyrogram import Client, filters, enums,idle
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ChatPermissions
-from pymongo import AsyncMongoClient
-import re, os
-from pyrogram.errors import FloodWait, UserIsBlocked, PeerIdInvalid, MessageNotModified
-from pyrogram.enums import ChatMemberStatus
-import asyncio
 import logging
 import sys
+import os
+import re
+from pyrogram import Client, filters, enums, idle
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ChatPermissions
+from pyrogram.errors import FloodWait, UserIsBlocked, PeerIdInvalid, MessageNotModified
+from pyrogram.enums import ChatMemberStatus
+from pymongo import AsyncMongoClient
 
+# --- LOGGING SETUP ---
 logging.basicConfig(
     level=logging.INFO,
     format='[%(asctime)s] %(levelname)s: %(message)s',
@@ -17,6 +18,7 @@ logging.basicConfig(
 )
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
+# --- CONFIGURATION ---
 api_id = os.getenv("API_ID", 0)
 api_hash = os.getenv("API_HASH", "81719734c6a0af15e5d35006655c1f84")
 bot_token = os.getenv("BOT_TOKEN", "")
@@ -24,12 +26,13 @@ mongodb_uri = os.getenv(
     "MONGO_DB_URI",
     "mongodb+srv://SHASHANK:STRANGER@shashank.uj7lold.mongodb.net/?retryWrites=true&w=majority",
 )
-support_gc = os.getenv("SUPPORT_GROUP", "")
-support_ch = os.getenv("SUPPORT_CHANNEL", "")
+support_gc = os.getenv("SUPPORT_GROUP", "https://t.me/YourSupportGroup") # Added fallback to prevent error if empty
+support_ch = os.getenv("SUPPORT_CHANNEL", "https://t.me/YourSupportChannel")
 owner = int(os.getenv("OWNER_ID", "8274033012"))
 
 app = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
+# --- DATABASE ---
 mongo_client = AsyncMongoClient(mongodb_uri)
 db = mongo_client["bio_filter_bot"]
 settings_col = db["settings"]
@@ -38,6 +41,7 @@ approved_users_col = db["approved_users"]
 chatsdb = db["chats"]
 usersdb = db["chatsdb"]
 
+# --- PATTERNS ---
 url_pattern = re.compile(
     r"(https?://|www.)[a-zA-Z0-9.-]+(.[a-zA-Z]{2,})+(/[a-zA-Z0-9._%+-]*)*"
 )
@@ -48,15 +52,14 @@ cache = {
     "chats": [],
 }
 is_broadcasting = False
-# --- USERS ---
 
+# --- DB FUNCTIONS ---
 
 async def get_served_users() -> list:
     if not cache["users"]:
         async for user in usersdb.find({"user_id": {"$gt": 0}}):
             cache["users"].append(user["user_id"])
     return cache["users"]
-
 
 async def add_served_user(user_id: int):
     await get_served_users()
@@ -65,16 +68,11 @@ async def add_served_user(user_id: int):
     await usersdb.insert_one({"user_id": user_id})
     cache["users"].append(user_id)
 
-
-# --- CHATS ---
-
-
 async def get_served_chats() -> list:
     if not cache["chats"]:
         async for chat in chatsdb.find({"chat_id": {"$lt": 0}}):
             cache["chats"].append(chat["chat_id"])
     return cache["chats"]
-
 
 async def add_served_chat(chat_id: int):
     await get_served_chats()
@@ -83,11 +81,9 @@ async def add_served_chat(chat_id: int):
     await chatsdb.insert_one({"chat_id": chat_id})
     cache["chats"].append(chat_id)
 
-
 async def get_settings(chat_id):
     setting = await settings_col.find_one({"chat_id": chat_id})
     return setting or {"chat_id": chat_id, "warn_limit": 3, "action": "mute"}
-
 
 async def set_settings(chat_id, warn_limit, action):
     await settings_col.update_one(
@@ -96,11 +92,9 @@ async def set_settings(chat_id, warn_limit, action):
         upsert=True,
     )
 
-
 async def get_warnings(user_id):
     doc = await warnings_col.find_one({"user_id": user_id})
     return doc["count"] if doc else 0
-
 
 async def add_warning(user_id):
     await warnings_col.update_one(
@@ -109,15 +103,12 @@ async def add_warning(user_id):
         upsert=True,
     )
 
-
 async def clear_warning(user_id):
     await warnings_col.delete_one({"user_id": user_id})
-
 
 async def is_approved(user_id, chat_id):
     doc = await approved_users_col.find_one({"user_id": user_id, "chat_id": chat_id})
     return doc is not None
-
 
 async def approve_user(user_id, chat_id):
     await approved_users_col.update_one(
@@ -125,7 +116,6 @@ async def approve_user(user_id, chat_id):
         {"$set": {"approved": True}},
         upsert=True,
     )
-
 
 async def unapprove_user(user_id, chat_id):
     await approved_users_col.delete_one({"user_id": user_id, "chat_id": chat_id})
@@ -138,6 +128,7 @@ async def is_admin(client, chat_id, user_id):
             return True
     return False
 
+# --- HANDLERS ---
 
 @app.on_message(filters.group & filters.command("config"))
 async def configure(client, message):
@@ -167,21 +158,10 @@ async def configure(client, message):
         ]
     )
     await message.reply_text(
-        "<b>Select punishment for users who have links or usernameremove?? in their bio:</b>",
+        "<b>Select punishment for users who have links or usernames in their bio:</b>",
         reply_markup=keyboard,
         parse_mode=enums.ParseMode.HTML,
     )
-
-
-keyboard = InlineKeyboardMarkup(
-    [
-        [
-            InlineKeyboardButton("• 𝐒υᴘᴘσꝛᴛ •", url=support_gc),
-            InlineKeyboardButton("• υᴘᴅᴧᴛєs •", url=support_ch),
-        ],
-    ]
-)
-
 
 @app.on_callback_query()
 async def callback_handler(client, cq):
@@ -366,18 +346,19 @@ async def approvelist_command(client, message):
     async for user_doc in approved_users:
         try:
             user = await client.get_users(user_doc["user_id"])
-            text += f"• <code>{user.id}</code> | {user.first_name} (@{user.username or 'N/A'})
-"
+            # FIX 1: Added \n at the end of the line
+            text += f"• <code>{user.id}</code> | {user.first_name} (@{user.username or 'N/A'})\n"
         except Exception:
             continue
 
     if not text:
         return await message.reply_text("❌ No users have been approved in this group.")
 
+    # FIX 2: Used triple quotes for multiline f-string
     await message.reply_text(
-        f"✅ Approved Users in this group:
+        f"""✅ Approved Users in this group:
 
-{text}", parse_mode=enums.ParseMode.HTML
+{text}""", parse_mode=enums.ParseMode.HTML
     )
 
 
@@ -386,8 +367,8 @@ async def stats(client, message):
     x = len(await get_served_chats())
     y = len(await get_served_users())
 
-    await message.reply(f"Total Chats: {x}
-Total users: {y}")
+    # FIX 3: Used \n instead of physical line break
+    await message.reply(f"Total Chats: {x}\nTotal users: {y}")
 
 
 @app.on_message(
@@ -447,10 +428,11 @@ async def gcast_command(client, message):
             failed += 1
         await asyncio.sleep(0.1)
 
+    # FIX 4: Used triple quotes
     await panel.edit(
-        f"📢 Broadcast Complete
+        f"""📢 Broadcast Complete
 ✅ Success: {success}
-❌ Failed: {failed}"
+❌ Failed: {failed}"""
     )
     is_broadcasting = False
 
@@ -473,30 +455,18 @@ async def start_com(client, message):
         ]
     )
 
+    # FIX 5: Cleaned up multiline string
     help_text = (
-        "<b>👋 Hello! I'm a Bio Filter Bot.</b>
-
-"
-        "I help protect your group from users with suspicious bios (URLs or usernames).
-
-"
-        "<b>🔧 Commands:</b>
-"
-        "• <code>/approve</code> - Approve a user (reply to their message or use ID)
-"
-        "• <code>/unapprove</code> - Revoke approval
-"
-        "• <code>/approvelist</code> - List all approved users
-"
-        "• <code>/config</code> - Set warnings & punishment
-"
-        "• <code>/stats</code> - Show usage stats (owner only)
-"
-        "• <code>/gcast</code> or <code>/broadcast</code> - Broadcast a message to all users/groups
-"
-        "• <code>/gcastpin</code> or <code>/broadcastpin</code> - Broadcast and pin the message
-
-"
+        "<b>👋 Hello! I'm a Bio Filter Bot.</b>\n\n"
+        "I help protect your group from users with suspicious bios (URLs or usernames).\n\n"
+        "<b>🔧 Commands:</b>\n"
+        "• <code>/approve</code> - Approve a user (reply to their message or use ID)\n"
+        "• <code>/unapprove</code> - Revoke approval\n"
+        "• <code>/approvelist</code> - List all approved users\n"
+        "• <code>/config</code> - Set warnings & punishment\n"
+        "• <code>/stats</code> - Show usage stats (owner only)\n"
+        "• <code>/gcast</code> or <code>/broadcast</code> - Broadcast a message to all users/groups\n"
+        "• <code>/gcastpin</code> or <code>/broadcastpin</code> - Broadcast and pin the message\n\n"
         "Add me to your group and make me admin to get started!"
     )
     await add_served_user(message.from_user.id)
@@ -543,9 +513,10 @@ async def check_bio(client, message):
         warn_count = await get_warnings(user_id) + 1
         await add_warning(user_id)
 
-        text = f"🚨 {username}, your message was deleted because your bio contains a link.
+        # FIX 6: Used triple quotes
+        text = f"""🚨 {username}, your message was deleted because your bio contains a link.
 
-Warning {warn_count}/{current['warn_limit']}"
+Warning {warn_count}/{current['warn_limit']}"""
         reply = await message.reply_text(text, reply_markup=sp)
 
         if warn_count >= current["warn_limit"]:
