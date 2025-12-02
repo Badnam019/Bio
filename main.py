@@ -147,6 +147,7 @@ async def configure(client, message):
         m = await message.reply_text(
             "<b>❌ You are not administrator</b>", parse_mode=enums.ParseMode.HTML
         )
+        # DELETE: Warning
         asyncio.create_task(auto_delete_message(m))
         return
 
@@ -264,6 +265,7 @@ async def approve_user_command(client, message):
         m = await message.reply_text(
             "<b>❌ You are not an administrator</b>", parse_mode=enums.ParseMode.HTML
         )
+        # DELETE: Warning
         asyncio.create_task(auto_delete_message(m))
         return
 
@@ -278,6 +280,7 @@ async def approve_user_command(client, message):
                 target_user = await client.get_users(int(arg))
             except Exception:
                 m = await message.reply_text("❌ Invalid user ID.")
+                # DELETE: Warning
                 asyncio.create_task(auto_delete_message(m))
                 return
         else:
@@ -287,12 +290,14 @@ async def approve_user_command(client, message):
                 target_user = await client.get_users(arg)
             except Exception:
                 m = await message.reply_text("❌ Invalid username.")
+                # DELETE: Warning
                 asyncio.create_task(auto_delete_message(m))
                 return
     else:
         m = await message.reply_text(
             "❌ Please reply to a message or provide a username/user ID."
         )
+        # DELETE: Warning
         asyncio.create_task(auto_delete_message(m))
         return
 
@@ -300,14 +305,15 @@ async def approve_user_command(client, message):
         m = await message.reply_text(
             "❌ This user is already approved in this group."
         )
+        # DELETE: Warning
         asyncio.create_task(auto_delete_message(m))
         return
 
     await approve_user(target_user.id, chat_id)
-    m = await message.reply_text(
+    # KEEP: Success message
+    await message.reply_text(
         f"✅ User {target_user.mention} has been approved for this group."
     )
-    asyncio.create_task(auto_delete_message(m))
 
 
 @app.on_message(filters.group & filters.command("unapprove"))
@@ -319,6 +325,7 @@ async def unapprove_user_command(client, message):
         m = await message.reply_text(
             "<b>❌ You are not an administrator</b>", parse_mode=enums.ParseMode.HTML
         )
+        # DELETE: Warning
         asyncio.create_task(auto_delete_message(m))
         return
 
@@ -333,6 +340,7 @@ async def unapprove_user_command(client, message):
                 target_user = await client.get_users(int(arg))
             except Exception:
                 m = await message.reply_text("❌ Invalid user ID.")
+                # DELETE: Warning
                 asyncio.create_task(auto_delete_message(m))
                 return
         else:
@@ -342,25 +350,28 @@ async def unapprove_user_command(client, message):
                 target_user = await client.get_users(arg)
             except Exception:
                 m = await message.reply_text("❌ Invalid username.")
+                # DELETE: Warning
                 asyncio.create_task(auto_delete_message(m))
                 return
     else:
         m = await message.reply_text(
             "❌ Please reply to a message or provide a username/user ID."
         )
+        # DELETE: Warning
         asyncio.create_task(auto_delete_message(m))
         return
 
     if not await is_approved(target_user.id, chat_id):
         m = await message.reply_text("❌ This user is not approved in this group.")
+        # DELETE: Warning
         asyncio.create_task(auto_delete_message(m))
         return
 
     await unapprove_user(target_user.id, chat_id)
-    m = await message.reply_text(
+    # KEEP: Success message
+    await message.reply_text(
         f"❌ User {target_user.mention} has been unapproved from this group."
     )
-    asyncio.create_task(auto_delete_message(m))
 
 
 @app.on_message(filters.group & filters.command("approvelist"))
@@ -372,6 +383,7 @@ async def approvelist_command(client, message):
         m = await message.reply_text(
             "<b>❌ You are not an administrator</b>", parse_mode=enums.ParseMode.HTML
         )
+        # DELETE: Warning
         asyncio.create_task(auto_delete_message(m))
         return
 
@@ -385,16 +397,15 @@ async def approvelist_command(client, message):
             continue
 
     if not text:
-        m = await message.reply_text("❌ No users have been approved in this group.")
-        asyncio.create_task(auto_delete_message(m))
-        return
+        # KEEP: Informational
+        return await message.reply_text("❌ No users have been approved in this group.")
 
-    m = await message.reply_text(
+    # KEEP: Informational / List
+    await message.reply_text(
         f"""✅ Approved Users in this group:
 
 {text}""", parse_mode=enums.ParseMode.HTML
     )
-    asyncio.create_task(auto_delete_message(m))
 
 
 @app.on_message(filters.command("stats") & filters.user(owner))
@@ -402,8 +413,8 @@ async def stats(client, message):
     x = len(await get_served_chats())
     y = len(await get_served_users())
 
-    m = await message.reply(f"Total Chats: {x}\nTotal users: {y}")
-    asyncio.create_task(auto_delete_message(m))
+    # KEEP: Informational
+    await message.reply(f"Total Chats: {x}\nTotal users: {y}")
 
 
 @app.on_message(
@@ -478,13 +489,13 @@ async def start_com(client, message):
         [
             [
                 InlineKeyboardButton(
-                    "ᴧᴅᴅ ϻє ʙᴧʙʏ",
+                    "✚ ʌᴅᴅ ϻє ɪη ʏσυʀ ɢʀσυᴘ ✚",
                     url=f"https://t.me/{x.username}?startgroup=true",
                 )
             ],
             [
-                InlineKeyboardButton("sυᴘᴘσꝛᴛ", url=support_gc),
-                InlineKeyboardButton("υᴘᴅᴧᴛє", url=support_ch),
+                InlineKeyboardButton("• 𝐒υᴘᴘσꝛᴛ •", url=support_gc),
+                InlineKeyboardButton("• υᴘᴅᴧᴛєs •", url=support_ch),
             ],
         ]
     )
@@ -503,10 +514,10 @@ async def start_com(client, message):
         "Add me to your group and make me admin to get started!"
     )
     await add_served_user(message.from_user.id)
-    m = await message.reply_text(
+    # KEEP: Start/Help message
+    await message.reply_text(
         help_text, reply_markup=start_buttons, parse_mode=enums.ParseMode.HTML
     )
-    asyncio.create_task(auto_delete_message(m))
 
 
 @app.on_message(filters.group)
@@ -521,8 +532,8 @@ async def check_bio(client, message):
     sp = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton("sυᴘᴘσꝛᴛ", url=support_gc),
-                InlineKeyboardButton("υᴘᴅᴧᴛє", url=support_ch),
+                InlineKeyboardButton("• 𝐒υᴘᴘσꝛᴛ •", url=support_gc),
+                InlineKeyboardButton("• υᴘᴅᴧᴛєs •", url=support_ch),
             ],
         ]
     )
@@ -551,12 +562,12 @@ async def check_bio(client, message):
 
 Warning {warn_count}/{current['warn_limit']}"""
         reply = await message.reply_text(text, reply_markup=sp)
-        # AUTO DELETE ADDED HERE
+        # DELETE: Bio Warning
         asyncio.create_task(auto_delete_message(reply))
 
         if warn_count >= current["warn_limit"]:
             try:
-                if current["action"] == "ϻυᴛє":
+                if current["action"] == "mute":
                     await client.restrict_chat_member(
                         chat_id, user_id, ChatPermissions()
                     )
@@ -564,19 +575,19 @@ Warning {warn_count}/{current['warn_limit']}"""
                         [
                             [
                                 InlineKeyboardButton(
-                                    "υηϻυᴛє", callback_data=f"unmute_{user_id}"
+                                    "Uɴᴍᴜᴛᴇ ✅", callback_data=f"unmute_{user_id}"
                                 )
                             ]
                         ]
                     )
                     await reply.edit(f"{username} has been 🔇 muted.", reply_markup=kb)
-                elif current["action"] == "ʙᴧη":
+                elif current["action"] == "ban":
                     await client.ban_chat_member(chat_id, user_id)
                     kb = InlineKeyboardMarkup(
                         [
                             [
                                 InlineKeyboardButton(
-                                    "υηʙᴧη", callback_data=f"unban_{user_id}"
+                                    "Uɴʙᴀɴ ✅", callback_data=f"unban_{user_id}"
                                 )
                             ]
                         ]
