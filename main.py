@@ -39,7 +39,7 @@ chatsdb = db["chats"]
 usersdb = db["chatsdb"]
 
 url_pattern = re.compile(
-    r"(https?://|www\.)[a-zA-Z0-9.\-]+(\.[a-zA-Z]{2,})+(/[a-zA-Z0-9._%+-]*)*"
+    r"(https?://|www.)[a-zA-Z0-9.-]+(.[a-zA-Z]{2,})+(/[a-zA-Z0-9._%+-]*)*"
 )
 mention_pattern = re.compile(r"@[ऀ-ॿa-zA-Z0-9_]{5,}")
 
@@ -366,7 +366,8 @@ async def approvelist_command(client, message):
     async for user_doc in approved_users:
         try:
             user = await client.get_users(user_doc["user_id"])
-            text += f"• <code>{user.id}</code> | {user.first_name} (@{user.username or 'N/A'})\n"
+            text += f"• <code>{user.id}</code> | {user.first_name} (@{user.username or 'N/A'})
+"
         except Exception:
             continue
 
@@ -374,7 +375,9 @@ async def approvelist_command(client, message):
         return await message.reply_text("❌ No users have been approved in this group.")
 
     await message.reply_text(
-        f"✅ Approved Users in this group:\n\n{text}", parse_mode=enums.ParseMode.HTML
+        f"✅ Approved Users in this group:
+
+{text}", parse_mode=enums.ParseMode.HTML
     )
 
 
@@ -383,7 +386,8 @@ async def stats(client, message):
     x = len(await get_served_chats())
     y = len(await get_served_users())
 
-    await message.reply(f"Total Chats: {x}\nTotal users: {y}")
+    await message.reply(f"Total Chats: {x}
+Total users: {y}")
 
 
 @app.on_message(
@@ -444,7 +448,9 @@ async def gcast_command(client, message):
         await asyncio.sleep(0.1)
 
     await panel.edit(
-        f"📢 Broadcast Complete\n✅ Success: {success}\n❌ Failed: {failed}"
+        f"📢 Broadcast Complete
+✅ Success: {success}
+❌ Failed: {failed}"
     )
     is_broadcasting = False
 
@@ -468,16 +474,29 @@ async def start_com(client, message):
     )
 
     help_text = (
-        "<b>👋 Hello! I'm a Bio Filter Bot.</b>\n\n"
-        "I help protect your group from users with suspicious bios (URLs or usernames).\n\n"
-        "<b>🔧 Commands:</b>\n"
-        "• <code>/approve</code> - Approve a user (reply to their message or use ID)\n"
-        "• <code>/unapprove</code> - Revoke approval\n"
-        "• <code>/approvelist</code> - List all approved users\n"
-        "• <code>/config</code> - Set warnings & punishment\n"
-        "• <code>/stats</code> - Show usage stats (owner only)\n"
-        "• <code>/gcast</code> or <code>/broadcast</code> - Broadcast a message to all users/groups\n"
-        "• <code>/gcastpin</code> or <code>/broadcastpin</code> - Broadcast and pin the message\n\n"
+        "<b>👋 Hello! I'm a Bio Filter Bot.</b>
+
+"
+        "I help protect your group from users with suspicious bios (URLs or usernames).
+
+"
+        "<b>🔧 Commands:</b>
+"
+        "• <code>/approve</code> - Approve a user (reply to their message or use ID)
+"
+        "• <code>/unapprove</code> - Revoke approval
+"
+        "• <code>/approvelist</code> - List all approved users
+"
+        "• <code>/config</code> - Set warnings & punishment
+"
+        "• <code>/stats</code> - Show usage stats (owner only)
+"
+        "• <code>/gcast</code> or <code>/broadcast</code> - Broadcast a message to all users/groups
+"
+        "• <code>/gcastpin</code> or <code>/broadcastpin</code> - Broadcast and pin the message
+
+"
         "Add me to your group and make me admin to get started!"
     )
     await add_served_user(message.from_user.id)
@@ -490,9 +509,10 @@ async def start_com(client, message):
 async def check_bio(client, message):
     chat_id = message.chat.id
     user_id = message.from_user.id
-    x=  await app.get_chat_member(message.chat.id, message.from_user.id)
-    if x.status in  [ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]:
+    x = await client.get_chat_member(message.chat.id, message.from_user.id)
+    if x.status in [ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]:
         return 
+    
     await add_served_chat(chat_id)
     sp = InlineKeyboardMarkup(
         [
@@ -523,7 +543,9 @@ async def check_bio(client, message):
         warn_count = await get_warnings(user_id) + 1
         await add_warning(user_id)
 
-        text = f"🚨 {username}, your message was deleted because your bio contains a link.n\nWarning {warn_count}/{current['warn_limit']}"
+        text = f"🚨 {username}, your message was deleted because your bio contains a link.
+
+Warning {warn_count}/{current['warn_limit']}"
         reply = await message.reply_text(text, reply_markup=sp)
 
         if warn_count >= current["warn_limit"]:
